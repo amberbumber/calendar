@@ -1,0 +1,26 @@
+<html>
+    <head>
+        {% if title %}
+        <title>{{ title }} - Calendar</title>
+        {% else %}
+        <title>Welcome to Calendar</title>
+        {% endif %}
+    </head>
+    <body>
+        <div>
+            Календарь:
+            <a href="{{ url_for('main.index') }}">Мой календарь</a>
+        </div>
+        <hr>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+  </body>
+</html>

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block content %}
+    <h1>Это должен быть календарь</h1>
+    <table>
+        <th colspan="7" class="month">{{today_month_year}}</th>
+        <tr>
+            {% for day in week_days %}
+            <th>{{day}}</th>
+            {% endfor %}
+        </tr>
+        {% with month_cal = c.monthdatescalendar(2021, 6) %}
+        {% for week in month_cal %}
+        <tr>
+            {% for date in week %}
+            <td>
+                <p>
+                    {% if date.month == 6 %}
+                    <b>{{ date.day }}</b>
+                    {% else %}
+                    <i style="color:#808080">{{ date.day }}</i>
+                    {% endif %}
+                </p>
+            </td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+        {% endwith %}
+    </table>
+
+{% endblock %}
