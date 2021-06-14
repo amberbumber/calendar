@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+    <table class="table table-bordered">
+        <thead>
+        <th colspan="7" class="text-center">{{c.month_name }} {{ c.year}}</th>
+        </thead>
+        <tbody>
+        <tr class="info">
+            {% for day in c.week_days_name %}
+            <th>{{day}}</th>
+            {% endfor %}
+        </tr>
+        {% for week in c.dates %}
+        <tr>
+            {% for day in week %}
+            <td class="{% if day.month != 6 %} text-muted {% else %} text-primary strong{% endif %}">
+                {{ day.date }}
+                {% for task in day_tasks %}
+                {% include '_task.html' %}
+                {% endfor %}
+            </td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

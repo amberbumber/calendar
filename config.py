@@ -6,4 +6,5 @@ load_dotenv(os.path.join(basedir, '.env'))
 
 
 class Config:
-    pass
+    # список поддерживаемых языков
+    LANGUAGES = 'ru'
