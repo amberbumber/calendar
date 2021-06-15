@@ -2,6 +2,7 @@ from app.api import bp
 from flask import jsonify, request, current_app
 from calendar import LocaleTextCalendar
 from datetime import date
+from app.api.auth import token_auth
 
 
 @bp.route('/calendar', methods=['GET'])
@@ -21,3 +22,10 @@ def calendar():
         ]
     )
     return jsonify(month_calendar)
+
+
+
+@bp.route('/test', methods=['GET'])
+@token_auth.login_required
+def test():
+    return jsonify({'key': 'value'})
