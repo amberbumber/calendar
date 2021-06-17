@@ -1,8 +1,7 @@
 from flask import current_app, render_template, url_for, redirect, g
 from flask_login import current_user
 from app.main import bp
-from calendar import Calendar, month_name, LocaleTextCalendar
-from datetime import date
+from app.main.forms import CalendarForm, month_id
 import requests
 import json
 from app.models import User
@@ -20,9 +19,15 @@ def index():
 
 @bp.route('/calendar', methods=['GET', 'POST'])
 def calendar():
+    form = CalendarForm()
+    if form.month.data and form.year.data:
+        r = requests.get(url_for('api.calendar', _external=True),
+                         params={'month': form.month.data, 'year': form.year.data})
+        month_calendar = json.loads(r.content.decode('utf-8-sig'))
+        return render_template('month_calendar.html', c=month_calendar, form=form)
     r = requests.get(url_for('api.calendar', _external=True))
     month_calendar = json.loads(r.content.decode('utf-8-sig'))
-    return render_template('month_calendar.html', c=month_calendar)
+    return render_template('month_calendar.html', c=month_calendar, form=form)
 
 
 @bp.route('/edit_profile', methods=['GET', 'POST'])

@@ -2,6 +2,29 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 
 {% block app_content %}
+    <form action="" method="post", class="form", role="form">
+        {{ form.hidden_tag() }}
+        <div class="row" >
+            <div>
+                <div class="col-md-2">
+                    <br>
+                    {{ form.month(class="form-control") }}<br>
+                </div>
+                <div class="col-md-2">
+                    <br>
+                    {{ form.year(class="form-control") }}<br>
+                </div>
+                <div class="col-md-2">
+                    <br>
+                    {{ form.submit(class="btn btn-default") }}<br>
+                </div>
+            </div>
+            <div>
+
+            </div>
+        </div>
+    </form>
+
     <table class="table table-bordered">
         <thead>
         <th colspan="7" class="text-center">{{c.month_name }} {{ c.year}}</th>
@@ -15,7 +38,7 @@
         {% for week in c.dates %}
         <tr>
             {% for day in week %}
-            <td class="{% if day.month != 6 %} text-muted {% else %} text-primary strong{% endif %}">
+            <td class="{% if day.month != c.month_number %} text-muted {% else %} text-primary strong{% endif %}">
                 {{ day.date }}
                 {% for task in day_tasks %}
                 {% include '_task.html' %}

@@ -13,11 +13,11 @@ def calendar():
     c = LocaleTextCalendar(locale=locale)
     month_calendar = dict(
         year=year,
-        month_number=month,
+        month_number=int(month),
         month_name=c.formatmonthname(int(year), int(month), width=0).split()[0],
         week_days_name=[c.formatweekday(day, width=3).strip() for day in range(0, 7)],
         dates=[
-            [dict(month=day.month, date=day.day) for day in week]
+            [dict(month=int(day.month), date=day.day) for day in week]
             for week in c.monthdatescalendar(int(year), int(month))
         ]
     )
