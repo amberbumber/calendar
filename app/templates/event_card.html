@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+
+
+    <form action="" method="post", class="form verification", role="form">
+        {{ form.hidden_tag() }}
+        <div class="fix-width-70 center-block">
+            <div class="row" >
+                <div class="col-md-3">
+                    <br>
+                    {{ form.date.label }}
+                    {{ form.date(class="form-control" , type='date') }}<br>
+                </div>
+                <div class="col-md-9">
+                    <br>
+                    {{ form.summary.label }}
+                    {{ form.summary(class="form-control", placeholder='...') }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <br>
+                    {{ form.full_description.label }}
+                    {{ form.full_description(class="form-control fix-width-100") }}<br>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <br>
+                    <a class="btn btn-default" href="{{ url_for('main.calendar') }}" role="button">Назад</a>
+                </div>
+                <div class="col-md-6">
+                    <br>
+                    {{ form.submit(class="btn btn-success") }}<br>
+                </div>
+            </div>
+        </div>
+    </form>
+
+{% endblock %}

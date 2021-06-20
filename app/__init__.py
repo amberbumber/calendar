@@ -5,6 +5,7 @@ from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
+from flask_datepicker import datepicker
 
 
 # инициализация объектов
@@ -15,6 +16,7 @@ login.login_view = 'auth.login'  # Значение «login» выше явля�
                             # Другими словами, имя, которое вы будете использовать в вызове url_for(), чтобы получить
                             # URL
 bootstrap = Bootstrap()
+datepicker = datepicker()
 
 
 def create_app(config_class=Config):
@@ -25,6 +27,7 @@ def create_app(config_class=Config):
     migrate.init_app(app, db)
     login.init_app(app)
     bootstrap.init_app(app)
+    datepicker.init_app(app)
 
     # регистрация схемы данных в приложении
     from app.main import bp as main_bp

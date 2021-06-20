@@ -57,9 +57,12 @@
 {% endblock %}
 
 {% block scripts %}
+        {{ super() }}
+        {{ datepicker.loader(theme="smoothness") }}
+        {{ datepicker.picker(id=".dp", dateFormat='dd.mm.yy', btnsId='.btnId') }}
     <script>
         $(document).ready(function() {
-            $(".day-cell").hover(function(){
+            $('.day-cell').hover(function(){
                 $(this).addClass("active");
             },function(){
                 $(this).removeClass("active");

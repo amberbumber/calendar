@@ -5,7 +5,7 @@ import base64
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from hashlib import md5
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 
 
 # загрузка зарегистрированного пользователя
@@ -22,6 +22,7 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(128))
     token = db.Column(db.String(32), index=True, unique=True)
     token_expiration = db.Column(db.DateTime)
+    events = db.relationship('Event', backref='user', lazy='dynamic')
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
@@ -83,3 +84,29 @@ class User(UserMixin, db.Model):
             self.set_password(data['password'])
 
 
+class Event(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    summary = db.Column(db.String(64))
+    full_description = db.Column(db.String(128))
+    date = db.Column(db.Date, index=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    def __repr__(self):
+        return '<Event {}>'.format(self.summary)
+
+    def to_dict(self):
+        data = {
+            'id': self.id,
+            'summary': self.summary,
+            'full_description': self.full_description,
+            'date': {'day': self.date.day, 'month': self.date.month, 'year': self.date.year}
+        }
+        return data
+
+    def from_dict(self, data):
+        for field in ['summary', 'full_description', 'date']:
+            if field in data:
+                if field == 'date':
+                    setattr(self, field, date(data[field]['year'], data[field]['month'], data[field]['day']))
+                    continue
+                setattr(self, field, data[field])
