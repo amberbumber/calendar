@@ -1,9 +1,12 @@
- <table class="table-normal table-hover" >
+
+<table class="table-events table-hover" >
         <tr >
-            <td class="success">
-                <span id="{{ events[i].id }}">
-                <a href="">{{ events[i].summary }}</a>
-                </span>
+            <td class="active"  bgcolor="Moccasin">
+                <a href="{{ url_for('main.edit_event', id=events[i].id) }}">
+                    <div id="{{ events[i].id }}"  class="clip">
+                    {{ events[i].summary }}
+                    </div>
+                </a>
             </td>
         </tr>
  </table>

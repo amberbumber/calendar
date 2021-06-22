@@ -5,18 +5,6 @@ from app.models import User
 from datetime import date
 
 
-def month_name(id):
-    months = {'1': 'Январь', '2': 'Февраль', '3': 'Март', '4': 'Апрель', '5': 'Май', '6': 'Июнь', '7': 'Июль',
-              '8': 'Август', '9': 'Сентябрь', '10': 'Октябрь', '11': 'Ноябрь', '12': 'Декабрь'}
-    return months[str(id)]
-
-
-def month_id(month_name):
-    months = {'Январь': '1', 'Февраль': '2', 'Март': '3', 'Апрель': '4', 'Май': '5', 'Июнь': '6', 'Июль': '7',
-              'Август': '8', 'Сентябрь': '9', 'Октябрь': '10', 'Ноябрь': '11', 'Декабрь': '12'}
-    return int(months[str(month_name)])
-
-
 #  форма переключения календаря
 class CalendarForm(FlaskForm):
     month = SelectField('Месяц',
@@ -43,8 +31,3 @@ class EventForm(FlaskForm):
     summary = StringField('Название', validators=[DataRequired()])
     full_description = TextAreaField('Полное описание')
     submit = SubmitField('Сохранить')
-
-    # def validate_date(self):
-    #     print(date.data)
-    #     date.process_formdata(date.data)
-    #     print(date.process_formdata(date.data))

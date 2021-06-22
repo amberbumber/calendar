@@ -1,10 +1,10 @@
-from flask import current_app, render_template, url_for, redirect, request, jsonify
+from flask import current_app, render_template, url_for, redirect, request, jsonify, flash
 from flask_login import current_user
 from app.main import bp
 from app.main.forms import CalendarForm, EventForm
 import requests
 import json
-from app.models import User
+from app.models import User, Event
 from datetime import date
 from calendar import _nextmonth, _prevmonth
 
@@ -63,13 +63,47 @@ def add_event(date_data=None):
                     summary=form.summary.data,
                     full_description=form.full_description.data)
         r_add_event = requests.post(url_for('api.add_event', _external=True, id=current_user.id), json=data)
-        event = json.loads(r_add_event.content.decode('utf-8-sig'))
-        print(r_add_event.status_code)
-        print(event)
+        if r_add_event.status_code == 200:
+            flash('Событие успешно добавлено')
+        else:
+            flash('Произошла ошибка')
         return redirect(url_for('main.calendar', month=form.date.data.month, year=form.date.data.year))
     return render_template('event_card.html', form=form)
 
 
+@bp.route('/edit_event/<int:id>',  methods=['GET', 'POST'])
+def edit_event(id):
+    form = EventForm()
+    event = current_user.events.filter_by(id=id).first_or_404()
+    if form.validate_on_submit():
+        data = dict(date=dict(day=form.date.data.day,
+                              month=form.date.data.month,
+                              year=form.date.data.year),
+                    summary=form.summary.data,
+                    full_description=form.full_description.data)
+        r_edit_event = requests.put(url_for('api.edit_event', _external=True, id=event.id), json=data)
+        if r_edit_event.status_code == 201:
+            flash('Изменения успешно сохранены')
+        else:
+            flash('Произошла ошибка')
+        return redirect(url_for('main.calendar', month=form.date.data.month, year=form.date.data.year))
+    elif request.method == 'GET':
+        form.date.data = event.date
+        form.summary.data = event.summary
+        form.full_description.data = event.full_description
+    return render_template('event_card.html', form=form, event_id=event.id)
+
+
+@bp.route('/delete_event/<int:id>', methods=['GET'])
+def delete_event(id):
+    event = current_user.events.filter_by(id=id).first_or_404()
+    month, year = event.date.month, event.date.year
+    r_delete_event = requests.delete(url_for('api.edit_event', _external=True, id=event.id))
+    if r_delete_event.status_code == 204:
+        flash('Событие успешно удалено')
+    else:
+        flash('Произошла ошибка')
+    return redirect(url_for('main.calendar', month=month, year=year))
 
 
 @bp.route('/edit_profile', methods=['GET', 'POST'])

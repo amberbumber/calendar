@@ -99,7 +99,7 @@ class Event(db.Model):
             'id': self.id,
             'summary': self.summary,
             'full_description': self.full_description,
-            'date': {'day': self.date.day, 'month': self.date.month, 'year': self.date.year}
+            'date': self.date_to_dict(self.date)
         }
         return data
 
@@ -107,6 +107,14 @@ class Event(db.Model):
         for field in ['summary', 'full_description', 'date']:
             if field in data:
                 if field == 'date':
-                    setattr(self, field, date(data[field]['year'], data[field]['month'], data[field]['day']))
+                    setattr(self, field, self.dict_to_date(data[field]))
                     continue
                 setattr(self, field, data[field])
+
+    @staticmethod
+    def dict_to_date(date_dict):
+        return date(date_dict['year'], date_dict['month'], date_dict['day'])
+
+    @staticmethod
+    def date_to_dict(date_obj):
+        return {'day': date_obj.day, 'month': date_obj.month, 'year': date_obj.year}

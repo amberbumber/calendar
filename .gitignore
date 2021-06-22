@@ -41,3 +41,4 @@ app.db*
 calendar.log*
 .env
 logs/
+/dev_tasks.txt

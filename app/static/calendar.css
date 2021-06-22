@@ -1,12 +1,25 @@
-.strong {
+table {   /* для выравнивания ширины колонок календаря */
+  width: 100%;
+  table-layout: fixed;
+}
+
+table td {   /* для выравнивания ширины колонок календаря */
+  width: 100%;
+}
+
+.strong {   /* жирный текст */
   font-weight: bold;
 }
 
-.today {
+.today {    /* стиль текущей даты */
     text-shadow: 0px 0px 10px DarkSlateGray;
 }
 
-.table-normal {
+.btn {
+  border-radius: 20px;
+}
+
+.table-events {    /* стиль таблицы с событиями */
   font-weight: normal;
   width: 100%;
   max-width: 100%;
@@ -15,6 +28,23 @@
   margin-left: 5 px;
   margin-right: 5 px;
 }
+
+.table-events td {   /* стиль ячейки события */
+border-radius: 5px
+}
+
+.table-events td a {
+text-decoration: none; /* убирает подчеркивание с ссылок на событие в таблице */
+color: #242424;
+text-shadow: none;
+}
+
+.clip {   /* обрезает текст с многоточием по блоку */
+    white-space: nowrap;
+    overflow: hidden;
+    padding: 5px;
+    text-overflow: ellipsis;
+   }
 
 .fix-width-70 {
   width: 70%;
