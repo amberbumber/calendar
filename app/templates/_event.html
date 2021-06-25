@@ -1,9 +1,9 @@
 
-<table class="table-events table-hover" >
+<table class="table-events" >
         <tr >
-            <td class="active"  bgcolor="Moccasin">
-                <a href="{{ url_for('main.edit_event', id=events[i].id) }}">
-                    <div id="{{ events[i].id }}"  class="clip">
+            <td class="{% if events[i].color %} {{events[i].color}} {% else %} default {% endif %} event-cell">
+                <a href="{{ url_for('main.event', id=events[i].id) }}">
+                    <div id="{{ events[i].id }}"  class="event-popup clip">
                     {{ events[i].summary }}
                     </div>
                 </a>

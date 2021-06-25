@@ -7,6 +7,14 @@ table td {   /* для выравнивания ширины колонок ка
   width: 100%;
 }
 
+li {
+    list-style-type: none; /* Убираем маркеры */
+}
+
+input[type=radio] {
+    visibility: hidden;  /* Убираем чекбоксы */
+}
+
 .strong {   /* жирный текст */
   font-weight: bold;
 }
@@ -17,6 +25,7 @@ table td {   /* для выравнивания ширины колонок ка
 
 .btn {
   border-radius: 20px;
+  min-width: 140px;
 }
 
 .table-events {    /* стиль таблицы с событиями */
@@ -29,8 +38,28 @@ table td {   /* для выравнивания ширины колонок ка
   margin-right: 5 px;
 }
 
-.table-events td {   /* стиль ячейки события */
+.table-events td, .event-cell {   /* стиль ячейки события */
 border-radius: 5px
+}
+
+.event-cell:hover {
+  filter: brightness(95%);
+}
+
+.event-cell:active {
+  box-shadow: inset 0px 0px 20px darkgrey;
+}
+
+label.event-cell {
+    margin-left: auto;
+    margin-right: auto;
+    width: 140px;
+    margin-bottom: 15px;
+    padding-left: 25px
+}
+
+.checked {
+    box-shadow: 5px 5px 0px lightsteelblue;
 }
 
 .table-events td a {
@@ -38,6 +67,55 @@ text-decoration: none; /* убирает подчеркивание с ссыл�
 color: #242424;
 text-shadow: none;
 }
+
+.popover-content {
+    max-height: 150px;
+    padding: 6px;
+    overflow: overlay;
+}
+
+.popover-content a {
+    min-width: fit-content;
+    color: red;
+    background-color: white;
+    border: none;
+    border-radius: 10px;
+
+}
+
+.popover-content:hover {
+    background-color: white;
+}
+
+/* классы для цветов ячеек событий */
+.default {
+    background-color: Gainsboro
+}
+
+.blue {
+    background-color: LightSkyBlue
+}
+
+.green {
+    background-color: DarkSeaGreen
+}
+
+.yellow {
+    background-color: Gold
+}
+
+.orange {
+    background-color: Orange
+}
+
+.red {
+    background-color: Crimson
+}
+
+.pink {
+    background-color: Orchid
+}
+
 
 .clip {   /* обрезает текст с многоточием по блоку */
     white-space: nowrap;
@@ -55,5 +133,14 @@ text-shadow: none;
   width: 100%;
   max-width: 100%;
   min-width:100%;
-  min-height: 150px;
+}
+
+textarea.fix-width-100 {
+  min-height: 350px;
+}
+
+.center-content {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
 }

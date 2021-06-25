@@ -1,7 +1,7 @@
 from flask import current_app, render_template, url_for, redirect, request, jsonify, flash
 from flask_login import current_user
 from app.main import bp
-from app.main.forms import CalendarForm, EventForm
+from app.main.forms import CalendarForm, EventForm, EmptyForm
 import requests
 import json
 from app.models import User, Event
@@ -56,6 +56,7 @@ def add_event(date_data=None):
     if date_data:
         pass   # будет записываться дата при инажатии на ячейку
     form = EventForm()
+    color_amount = len(form.color.choices)
     if form.validate_on_submit():
         data = dict(date=dict(day=form.date.data.day,
                               month=form.date.data.month,
@@ -68,22 +69,29 @@ def add_event(date_data=None):
         else:
             flash('Произошла ошибка')
         return redirect(url_for('main.calendar', month=form.date.data.month, year=form.date.data.year))
-    return render_template('event_card.html', form=form)
+    return render_template('event_card.html', form=form, color_amount=color_amount)
 
 
-@bp.route('/edit_event/<int:id>',  methods=['GET', 'POST'])
-def edit_event(id):
+@bp.route('/event/<int:id>',  methods=['GET', 'POST'])
+def event(id):
     form = EventForm()
     event = current_user.events.filter_by(id=id).first_or_404()
+    color_amount = len(form.color.choices)
+    form.validate()
     if form.validate_on_submit():
         data = dict(date=dict(day=form.date.data.day,
                               month=form.date.data.month,
                               year=form.date.data.year),
                     summary=form.summary.data,
-                    full_description=form.full_description.data)
+                    full_description=form.full_description.data,
+                    color=form.color.data if form.color.data else event.color)
         r_edit_event = requests.put(url_for('api.edit_event', _external=True, id=event.id), json=data)
-        if r_edit_event.status_code == 201:
+        print(r_edit_event.status_code)
+        print(r_edit_event.content)
+        if r_edit_event.status_code == 200:
             flash('Изменения успешно сохранены')
+        elif r_edit_event.status_code == 201:
+            flash('Событие создано')
         else:
             flash('Произошла ошибка')
         return redirect(url_for('main.calendar', month=form.date.data.month, year=form.date.data.year))
@@ -91,7 +99,8 @@ def edit_event(id):
         form.date.data = event.date
         form.summary.data = event.summary
         form.full_description.data = event.full_description
-    return render_template('event_card.html', form=form, event_id=event.id)
+        form.color.data = event.color
+    return render_template('event_card.html', form=form, event=event, color_amount=color_amount)
 
 
 @bp.route('/delete_event/<int:id>', methods=['GET'])
@@ -106,6 +115,14 @@ def delete_event(id):
     return redirect(url_for('main.calendar', month=month, year=year))
 
 
+@bp.route('/event/<int:id>/popup')
+def user_popup(id):
+    form=EmptyForm()
+    event = Event.query.filter_by(id=id).first_or_404()
+    return render_template('event_popup.html', event=event, form=form)
+
+
 @bp.route('/edit_profile', methods=['GET', 'POST'])
 def edit_profile():
     pass
+

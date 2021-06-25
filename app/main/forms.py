@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import SelectField, DateField, SubmitField, StringField, TextAreaField
+from wtforms import SelectField, DateField, SubmitField, StringField, TextAreaField, RadioField
 from wtforms.validators import ValidationError, DataRequired
 from app.models import User
 from datetime import date
@@ -31,3 +31,11 @@ class EventForm(FlaskForm):
     summary = StringField('Название', validators=[DataRequired()])
     full_description = TextAreaField('Полное описание')
     submit = SubmitField('Сохранить')
+    color = RadioField('Цвет',
+                       choices=[('default', 'По умолчанию'), ('blue', 'Голубой'), ('green', 'Зеленый'),
+                                ('yellow', 'Желтый'), ('orange', 'Оранжевый'), ('red', 'Красный'), ('pink', 'Розовый')],
+                       validate_choice=False)
+
+# пустая вспомогательная форма
+class EmptyForm():
+    submit = SubmitField('Submit')

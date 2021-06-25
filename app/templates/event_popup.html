@@ -1,0 +1,40 @@
+<table class="">
+    <tr>
+        <th width="50px" style="border: 0px;" class="{{event.color}} event-cell">
+            <div></div>
+        </th>
+        <th width="150px" style="border: 0px;" class="center-content">
+            <small>
+                {{ event.date }}
+            </small>
+        </th>
+    </tr>
+    <tr>
+        <td colspan="2" style="margin-top: 15px">
+                <strong>
+                {{event.summary}}
+                </strong>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2" style="margin-top: 15px">
+            <small>
+                {{ event.full_description }}
+            </small>
+        </td>
+    </tr>
+
+    <tr class="fix-width-100">
+
+
+        <td colspan="2" >
+            <div>
+            <br>
+            <a class="btn-xs btn-danger" href="{{ url_for('main.delete_event', id=event.id) }}" role="button"
+               onclick="return confirm('Вы уверены, что хотите удалить событие?');"
+               >Удалить</a>
+            </div>
+        </td>
+    </tr>
+</table>

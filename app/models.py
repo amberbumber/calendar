@@ -90,6 +90,7 @@ class Event(db.Model):
     full_description = db.Column(db.String(128))
     date = db.Column(db.Date, index=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    color = db.Column(db.String(10))
 
     def __repr__(self):
         return '<Event {}>'.format(self.summary)
@@ -99,12 +100,13 @@ class Event(db.Model):
             'id': self.id,
             'summary': self.summary,
             'full_description': self.full_description,
-            'date': self.date_to_dict(self.date)
+            'date': self.date_to_dict(self.date),
+            'color': self.color
         }
         return data
 
     def from_dict(self, data):
-        for field in ['summary', 'full_description', 'date']:
+        for field in ['summary', 'full_description', 'date', 'color']:
             if field in data:
                 if field == 'date':
                     setattr(self, field, self.dict_to_date(data[field]))

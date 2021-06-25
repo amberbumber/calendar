@@ -19,27 +19,46 @@
                     {{ form.summary(class="form-control", placeholder='...') }}
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12">
+            <div>
                     <br>
                     {{ form.full_description.label }}
-                    {{ form.full_description(class="form-control fix-width-100") }}<br>
+                <div  class="row">
+                    <div class="col-md-9">
+                        {{ form.full_description(class="form-control fix-width-100") }}
+                    </div>
+                    <div  class="col-md-3">
+                        {% for i in range(color_amount) %}
+                            <div>
+                                <label class="btn event-cell {{form.color.choices[i][0]}}
+                                              {% if event and event.color == form.color.choices[i][0] %} checked
+                                              {% elif (not event or not event.color)
+                                              and form.color.choices[i][0] == 'default' %} checked
+                                              {% endif %}">
+                                    {{form.color.choices[i][1]}}
+                                    <input id="color-{{i}}" name="color" type="radio" value="{{form.color.choices[i][0]}}">
+                                </label>
+                            </div>
+                        {% endfor %}
+                    </div>
+
                 </div>
             </div>
+<!--        кнопки управления-->
+                <br><br>
             <div class="row center-block">
-                <div class="col-md-4">
+                <div class="col-md-4 center-content">
                     <br>
                     <a class="btn btn-default" href="{{ url_for('main.calendar') }}" role="button">Назад</a>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 center-content">
                     <br>
                     {{ form.submit(class="btn btn-success") }}<br>
                 </div>
-                {% if event_id %}
-                <div class="col-md-4">
+                {% if event %}
+                <div class="col-md-4 center-content">
                     <br>
                     <a class="btn btn-danger" onclick="return confirm('Вы уверены, что хотите удалить событие?');"
-                       href="{{ url_for('main.delete_event', id=event_id) }}" role="button">Удалить собтие</a>
+                       href="{{ url_for('main.delete_event', id=event.id) }}" role="button">Удалить собтие</a>
                 </div>
                 {% endif %}
             </div>
