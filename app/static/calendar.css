@@ -28,7 +28,7 @@ input[type=radio] {
   min-width: 140px;
 }
 
-.table-events {    /* стиль таблицы с событиями */
+.table-events, .list-events {    /* стиль таблицы с событиями */
   font-weight: normal;
   width: 100%;
   max-width: 100%;
@@ -38,19 +38,37 @@ input[type=radio] {
   margin-right: 5 px;
 }
 
-.table-events td, .event-cell {   /* стиль ячейки события */
-border-radius: 5px
+ul.list-events {
+    margin-top: 0;
+    margin-left: 0px;
+    padding-inline-start: 0px;
+    font-weight: normal;
+}
+
+.table-events td, .event-cell, .list-events div {   /* стиль ячейки события */
+    border-radius: 5px;
+    margin-bottom: 5px;
 }
 
 .event-cell:hover {
-  filter: brightness(95%);
+    filter: brightness(95%);
 }
 
 .event-cell:active {
   box-shadow: inset 0px 0px 20px darkgrey;
 }
+/*
+.popover {
+    filter: brightness(100%);
+}*/
 
-label.event-cell {
+.selected {
+  opacity: 1;
+  filter: drop-shadow(2px 4px 6px grey);
+  box-shadow: none;
+}
+
+label.event-cell {   /* кнопки выбора цвета */
     margin-left: auto;
     margin-right: auto;
     width: 140px;
@@ -58,11 +76,11 @@ label.event-cell {
     padding-left: 25px
 }
 
-.checked {
+.checked {  /* выбранный цвет */
     box-shadow: 5px 5px 0px lightsteelblue;
 }
 
-.table-events td a {
+.table-events td a, .list-events a {
 text-decoration: none; /* убирает подчеркивание с ссылок на событие в таблице */
 color: #242424;
 text-shadow: none;
@@ -72,6 +90,10 @@ text-shadow: none;
     max-height: 150px;
     padding: 6px;
     overflow: overlay;
+}
+
+.popover {
+    background-color: white;
 }
 
 .popover-content a {
