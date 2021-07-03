@@ -1,12 +1,9 @@
 
-<table class="table-events" >
-        <tr >
-            <td class="{% if events[i].color %} {{events[i].color}} {% else %} default {% endif %} event-cell">
-                <a href="{{ url_for('main.event', id=events[i].id) }}">
-                    <div id="{{ events[i].id }}"  class="event-popup clip">
-                    {{ events[i].summary }}
-                    </div>
-                </a>
-            </td>
-        </tr>
- </table>
+
+<div class="{% if events[i].color %} {{events[i].color}} {% else %} default {% endif %} event-cell">
+    <a href="{{ url_for('main.event', id=events[i].id) }}">
+        <div id="{{ events[i].id }}"  class="event-popup clip ">
+        {{ events[i].summary }}
+        </div>
+    </a>
+</div>

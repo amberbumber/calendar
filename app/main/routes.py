@@ -1,5 +1,5 @@
 from flask import current_app, render_template, url_for, redirect, request, jsonify, flash
-from flask_login import current_user
+from flask_login import current_user, login_required
 from app.main import bp
 from app.main.forms import CalendarForm, EventForm, EmptyForm
 import requests
@@ -29,16 +29,20 @@ def calendar():
 
     # при подтверждении формы (нажатие на кнопку "Показать") перенаправление на календарь с выбранными параметрами
     if form.validate_on_submit():
-        return redirect(url_for('main.calendar', month=form.month.data, year=form.year.data))
+        return redirect(url_for('main.calendar', month=form.month.data if form.month.data else None,
+                                year=form.year.data if form.year.data else None))
 
     # получаем данные для отбражения календаря
     r = requests.get(url_for('api.calendar', _external=True),
                          params={'month': month, 'year': year})
     month_calendar = json.loads(r.content.decode('utf-8-sig'))
     # полчуаем данные для отображения событий
-    r_events = requests.get(url_for('api.get_events', _external=True, id=current_user.id),
-                            params={'month': month, 'year': year})
-    events = json.loads(r_events.content.decode('utf-8-sig'))
+    if current_user.is_authenticated:
+        r_events = requests.get(url_for('api.get_events', _external=True, id=current_user.id),
+                                params={'month': month, 'year': year})
+        events = json.loads(r_events.content.decode('utf-8-sig'))
+    else:
+        events = {}
 
     # задаем значения ссылок для навигации по месяцам и создания событий
     next_month = url_for('main.calendar', month=str(_nextmonth(int(year), int(month))[1]),
@@ -52,6 +56,7 @@ def calendar():
 
 
 @bp.route('/add_event', methods=['GET', 'POST'])
+@login_required
 def add_event(date_data=None):
     if date_data:
         pass   # будет записываться дата при инажатии на ячейку
@@ -73,6 +78,7 @@ def add_event(date_data=None):
 
 
 @bp.route('/event/<int:id>',  methods=['GET', 'POST'])
+@login_required
 def event(id):
     form = EventForm()
     event = current_user.events.filter_by(id=id).first_or_404()
@@ -104,6 +110,7 @@ def event(id):
 
 
 @bp.route('/delete_event/<int:id>', methods=['GET'])
+@login_required
 def delete_event(id):
     event = current_user.events.filter_by(id=id).first_or_404()
     month, year = event.date.month, event.date.year
@@ -116,6 +123,7 @@ def delete_event(id):
 
 
 @bp.route('/event/<int:id>/popup')
+@login_required
 def user_popup(id):
     form=EmptyForm()
     event = Event.query.filter_by(id=id).first_or_404()
@@ -123,6 +131,7 @@ def user_popup(id):
 
 
 @bp.route('/edit_profile', methods=['GET', 'POST'])
+@login_required
 def edit_profile():
     pass
 

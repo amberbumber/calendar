@@ -6,6 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_datepicker import datepicker
+from flask_moment import Moment
 
 
 # инициализация объектов
@@ -15,8 +16,10 @@ login = LoginManager()
 login.login_view = 'auth.login'  # Значение «login» выше является именем функции (или конечной точки) для входа в систему.\
                             # Другими словами, имя, которое вы будете использовать в вызове url_for(), чтобы получить
                             # URL
+login.login_message = "Необходимо авторизоваться"
 bootstrap = Bootstrap()
 datepicker = datepicker()
+login = LoginManager()
 
 
 def create_app(config_class=Config):

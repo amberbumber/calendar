@@ -60,13 +60,16 @@
             <tr>
                 {% for day in week %}
                 <td class="{% if day.month != c.month_number %} text-muted {% else %} text-primary strong{% endif %}
-                           {% if day.day == today.day and day.month == today.month and c.year == today.year %} today{% endif %}">
+                           {% if day.day == today.day and day.month == today.month and c.year == today.year %} today{% endif %}"
+                >
                     {{ day.day }}
+                    <div class="list-events">
                     {% for i in events %}
                         {% if events[i].date.day == day.day and events[i].date.month == day.month %}
                             {% include '_event.html' %}
                         {% endif %}
                     {% endfor %}
+                    </div>
                 </td>
                 {% endfor %}
             </tr>
@@ -75,6 +78,7 @@
         </table>
     </div>
 <!-- кнопка добавления события -->
+    {% if current_user.is_authenticated %}
     <div>
         <div class="col-md-10"></div>
         <div class="col-md-2">
@@ -82,5 +86,6 @@
             <a class="btn btn-success" href="{{ url_for('main.add_event') }}" role="button">Добавить событие</a>
         </div>
     </div>
+    {% endif %}
 
 {% endblock %}
