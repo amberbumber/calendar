@@ -1,8 +1,12 @@
 
 
-<div class="{% if events[i].color %} {{events[i].color}} {% else %} default {% endif %} event-cell">
+<div class="{% if events[i].color %} {{events[i].color}} {% else %} default {% endif %} event-popup tasks__item"
+     id="{{ events[i].id }}"
+     draggable="true"
+     ondragstart="onDragStart(event);"
+ >
     <a href="{{ url_for('main.event', id=events[i].id) }}">
-        <div id="{{ events[i].id }}"  class="event-popup clip ">
+        <div   class="event-cell clip ">
         {{ events[i].summary }}
         </div>
     </a>

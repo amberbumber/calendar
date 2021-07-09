@@ -131,5 +131,98 @@
                 }
             );
         });
+
+
+        // перетаскивание элемента
+        function onDragStart(event) {
+            // Ззаписывыаем id переносимого события
+            event
+            .dataTransfer
+            .setData('text/plain', event.target.id);
+
+            elem = event.currentTarget
+
+            elem.classList.add("selected");
+
+            function popoverDestroy(event) {
+                    event.currentTarget.popover('destroy');
+                };
+        }
+
+
+        const getNextElement = (cursorPosition, currentElement) => {
+            // Получаем объект с размерами и координатами
+            const currentElementCoord = currentElement.getBoundingClientRect();
+            // Находим вертикальную координату центра текущего элемента
+            const currentElementCenter = currentElementCoord.y + currentElementCoord.height / 2;
+
+            // Если курсор выше центра элемента, возвращаем текущий элемент
+            // В ином случае — следующий DOM-элемент
+            const nextElement = (cursorPosition < currentElementCenter) ?
+                currentElement :
+                currentElement.nextElementSibling;
+
+            return nextElement;
+        };
+
+
+
+        function onDragOver(event) {
+            event.preventDefault();
+
+            const activeElement = document.querySelector(`.selected`);
+            const currentElement = event.target;
+            const isMoveable = activeElement !== currentElement &&
+                currentElement.classList.contains(`tasks__item`);
+
+            if (!isMoveable) {
+                event.currentTarget.classList.remove("selected");
+                return;
+            }
+
+            const nextElement = (event.currentTarget === event.currentTarget.nextElementSibling) ?
+                event.currentTarget.nextElementSibling :
+                event.currentTarget;
+
+            // Проверяем, нужно ли менять элементы местами
+            if (nextElement &&
+                event.currentTarget === nextElement.previousElementSibling ||
+                event.currentTarget === nextElement
+            ) {
+            // Если нет, выходим из функции, чтобы избежать лишних изменений в DOM
+                return;
+            };
+
+            // Вставляем activeElement перед nextElement
+            tasksListElement.insertBefore(event.currentTarget, nextElement);
+        };
+
+        function onDrop(event) {
+            const id = event
+                .dataTransfer
+                .getData('text');
+
+            const draggableElement = document.getElementById(id);
+            const dropzone = event.target;
+            dropzone.appendChild(draggableElement);
+
+            event
+                .dataTransfer
+                .clearData();
+
+            event.currentTarget.classList.remove("selected");
+
+        }
+
+
+
+        function onDragOver_ban(event) {
+            return;
+            }
+
+        function onDrop_ban(event) {
+            return;
+            }
+
     </script>
 {% endblock %}

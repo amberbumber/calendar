@@ -60,16 +60,16 @@
             <tr>
                 {% for day in week %}
                 <td class="{% if day.month != c.month_number %} text-muted {% else %} text-primary strong{% endif %}
-                           {% if day.day == today.day and day.month == today.month and c.year == today.year %} today{% endif %}"
-                >
-                    {{ day.day }}
-                    <div class="list-events">
+                           {% if day.day == today.day and day.month == today.month and c.year == today.year %} today{% endif %}
+                            list-events tasks__list"
+                    ondragover="onDragOver(event);"
+                    ondrop="onDrop(event);" style="min-height: 20px">
+                    <div>{{ day.day }}</div>
                     {% for i in events %}
                         {% if events[i].date.day == day.day and events[i].date.month == day.month %}
                             {% include '_event.html' %}
                         {% endif %}
                     {% endfor %}
-                    </div>
                 </td>
                 {% endfor %}
             </tr>
@@ -88,4 +88,11 @@
     </div>
     {% endif %}
 
+
+<div class="list-events"
+                        ondragover="onDragOver(event);"
+                        ondrop="onDrop(event);"
+    style="background-color: blue; height: 200px">
+
+                    </div>
 {% endblock %}
