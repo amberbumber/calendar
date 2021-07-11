@@ -1,1 +1,1 @@
-web: flask db upgrade; gunicorn calendar:app
+web: flask db upgrade; gunicorn calendar_app:app
