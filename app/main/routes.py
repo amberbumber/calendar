@@ -67,9 +67,10 @@ def add_event(date_data=None):
                               month=form.date.data.month,
                               year=form.date.data.year),
                     summary=form.summary.data,
-                    full_description=form.full_description.data)
+                    full_description=form.full_description.data,
+                    color=form.color.data if form.color.data else event.color)
         r_add_event = requests.post(url_for('api.add_event', _external=True, id=current_user.id), json=data)
-        if r_add_event.status_code == 200:
+        if r_add_event.status_code == 201:
             flash('Событие успешно добавлено')
         else:
             flash('Произошла ошибка')
