@@ -11,6 +11,7 @@ def calendar():
     year = request.args.get('year', date.today().year)
     locale = request.args.get('locale', current_app.config['LANGUAGES'])
     c = LocaleTextCalendar(locale=locale)
+    current_app.logger.info('locale: '+str(locale))
     month_calendar = dict(
         year=int(year),
         month_number=int(month),
