@@ -14,7 +14,7 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     # список поддерживаемых языков
-    LANGUAGES = 'ru'
+    LANGUAGES = os.environ.get('LANGUAGES') or 'ru'
 
     # настройки почтового сервера
     MAIL_SERVER = os.environ.get('MAIL_SERVER')
