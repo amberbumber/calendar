@@ -55,13 +55,15 @@ def calendar():
                            next_month=next_month, curr_month=curr_month, prev_month=prev_month)
 
 
-@bp.route('/add_event', methods=['GET', 'POST'])
+@bp.route('/add_event/', methods=['GET', 'POST'])
 @login_required
-def add_event(date_data=None):
-    if date_data:
-        pass   # будет записываться дата при инажатии на ячейку
+def add_event():
     form = EventForm()
     color_amount = len(form.color.choices)
+    event_date = request.args.get('d')
+
+    if event_date:
+        form.date.data = date.fromisoformat(event_date)
     if form.validate_on_submit():
         data = dict(date=dict(day=form.date.data.day,
                               month=form.date.data.month,

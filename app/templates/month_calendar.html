@@ -46,7 +46,7 @@
     </form>
 <!-- календарь -->
     <div>
-        <table class="table table-bordered">
+        <table class="table table-bordered calendar">
             <thead>
             <th colspan="7" class="text-center">{{c.month_name }} {{ c.year}}</th>
             </thead>
@@ -62,7 +62,9 @@
                 <td class="{% if day.month != c.month_number %} text-muted {% else %} text-primary strong{% endif %}
                            {% if day.day == today.day and day.month == today.month and c.year == today.year %} today{% endif %}"
                 >
-                    {{ day.day }}
+                    <a href="{{ url_for('main.add_event', d=day.full_date)  }}">
+                        <div>{{ day.day }}</div>
+                    </a>
                     <div class="list-events">
                     {% for i in events %}
                         {% if events[i].date.day == day.day and events[i].date.month == day.month %}

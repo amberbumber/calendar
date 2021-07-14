@@ -7,6 +7,12 @@ table td {   /* для выравнивания ширины колонок ка
   width: 100%;
 }
 
+.calendar td a {   /* для выравнивания ширины колонок календаря */
+    text-decoration: none;
+}
+
+
+
 li {
     list-style-type: none; /* Убираем маркеры */
 }
