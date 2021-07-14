@@ -61,7 +61,7 @@ def add_event():
     form = EventForm()
     color_amount = len(form.color.choices)
     event_date = request.args.get('d')
-
+    month, year = request.args.get('m', None), request.args.get('y', None)
     if event_date:
         form.date.data = date.fromisoformat(event_date)
     if form.validate_on_submit():
@@ -77,7 +77,7 @@ def add_event():
         else:
             flash('Произошла ошибка')
         return redirect(url_for('main.calendar', month=form.date.data.month, year=form.date.data.year))
-    return render_template('event_card.html', form=form, color_amount=color_amount)
+    return render_template('event_card.html', form=form, color_amount=color_amount, month=month, year=year)
 
 
 @bp.route('/event/<int:id>',  methods=['GET', 'POST'])

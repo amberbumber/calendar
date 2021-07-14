@@ -48,7 +48,11 @@
             <div class="row center-block">
                 <div class="col-md-4 center-content">
                     <br>
-                    <a class="btn btn-default" href="{{ url_for('main.calendar') }}" role="button">Назад</a>
+                    <a class="btn btn-default"
+                       href="{{ url_for('main.calendar',
+                                         month=form.date.data.month if form.date.data.month else month,
+                                         year = form.date.data.year if form.date.data.year else year) }}"
+                       role="button">Назад</a>
                 </div>
                 <div class="col-md-4 center-content">
                     <br>
