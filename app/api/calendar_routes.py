@@ -18,7 +18,7 @@ def calendar():
         month_name=c.formatmonthname(int(year), int(month), width=0).split()[0],
         week_days_name=[c.formatweekday(day, width=3).strip() for day in range(0, 7)],
         dates=[
-            [dict(month=int(day.month), day=day.day) for day in week]
+            [dict(month=int(day.month), day=day.day, full_date=day.isoformat()) for day in week]
             for week in c.monthdatescalendar(int(year), int(month))
         ],
         _links=dict(next_month=url_for('api.calendar', _external=True, month=_nextmonth(int(year), int(month))),

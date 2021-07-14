@@ -13,12 +13,15 @@ def get_events(id):
     month = request.args.get('month', date.today().month)
     year = request.args.get('year', date.today().year)
     user = User.query.get_or_404(id)
-    if int(month) != 12:
+    if int(month) == 12:
         events = user.events.filter(
-            Event.date >= date(int(year), int(month)-1, 23), Event.date < date(int(year), int(month) + 1, 7)).all()
+            Event.date >= date(int(year), int(month) - 1, 23), Event.date < date(int(year) + 1, 1, 7)).all()
+    elif int(month) == 1:
+        events = user.events.filter(
+            Event.date >= date(int(year) - 1, 12, 23), Event.date < date(int(year), int(month) + 1, 7)).all()
     else:
         events = user.events.filter(
-            Event.date >= date(int(year), int(month)-1, 23), Event.date < date(int(year)+1, 1, 7)).all()
+            Event.date >= date(int(year), int(month) - 1, 23), Event.date < date(int(year), int(month) + 1, 7)).all()
     events_dict = dict()
     # for day in range(1, calendar.monthrange(2021, 6)[1] + 1)
     # for event in events:
