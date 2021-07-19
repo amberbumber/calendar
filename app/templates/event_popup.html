@@ -3,16 +3,23 @@
         <th width="50px" style="border: 0px;" class="{{event.color}} event-cell">
             <div></div>
         </th>
-        <th width="150px" style="border: 0px;" class="center-content">
+        <th width="130px" style="border: 0px;" class="center-content">
             <small>
                 {{ event.date }}
+            </small>
+        </th>
+        <th width="20px" >
+            <small>
+                <input type="checkbox" class="checkbox-popup"
+                       onclick="CheckboxPopupClick({{event.id}});"
+                       {%if event.done==True%} checked {%endif%}>
             </small>
         </th>
     </tr>
     <tr>
         <td colspan="2" style="margin-top: 15px">
                 <strong>
-                {{event.summary}}
+                {{ event.summary }}
                 </strong>
         </td>
     </tr>

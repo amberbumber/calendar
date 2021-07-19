@@ -67,8 +67,6 @@ def edit_event(id):
     """PUT - редактировать данные о событии по id события"""
     event = Event.query.get_or_404(id)
     data = request.get_json() or {}
-    if 'date' not in data or 'summary' not in data:
-        return bad_request('must include date and summary')
     event.from_dict(data)
     db.session.commit()
     return jsonify(event.to_dict())

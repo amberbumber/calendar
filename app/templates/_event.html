@@ -1,8 +1,11 @@
 
 
-<div class="{% if events[i].color %} {{events[i].color}} {% else %} default {% endif %} event-cell">
+<div class="{% if events[i].color %} {{events[i].color}} {% else %} default {% endif %} event-cell
+            ">
     <a href="{{ url_for('main.event', id=events[i].id) }}">
-        <div id="{{ events[i].id }}"  class="event-popup clip ">
+        <div id="{{ events[i].id }}"
+             class="event-popup clip
+                    {% if events[i].done == true %} done {% endif %}">
         {{ events[i].summary }}
         </div>
     </a>

@@ -61,12 +61,26 @@ ul.list-events {
 }
 
 .event-cell:active {
-  box-shadow: inset 0px 0px 20px darkgrey;
+  background-image: none;
+  outline: 0;
+  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+          box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
 }
-/*
-.popover {
-    filter: brightness(100%);
-}*/
+
+.done {
+    text-decoration: line-through;
+}
+
+/* зменяем стиль bootstrap для активной кнопки - убираем контур при нажатии */
+.btn:focus,
+.btn:active:focus,
+.btn.active:focus,
+.btn.focus,
+.btn:active.focus {
+  outline: none;
+  outline-offset: none;
+}
+
 
 .selected {
   opacity: 1;
@@ -81,10 +95,12 @@ label.event-cell {   /* кнопки выбора цвета */
     width: 50px;
     margin-bottom: 15px;
     padding-left: 25px;
-    margin-right: 20px
+    margin-right: 20px;
+    border: none;
 }
 
-.colors div {
+/* расположение блоков цвета в линию при сжатии экрана */
+.color div {
     display:inline-block
 }
 
@@ -151,6 +167,7 @@ text-shadow: none;
 }
 
 
+/* отображение и верстка */
 .clip {   /* обрезает текст с многоточием по блоку */
     white-space: nowrap;
     overflow: hidden;

@@ -131,5 +131,35 @@
                 }
             );
         });
+
+        // установление признака "Выполнено" на поповере
+        function CheckboxPopupClick(id, done) {
+            $(function() {
+                var elem = $(event.currentTarget);
+                if (hasClass(document.getElementById(id), 'done')) {
+                    $(document.getElementById(id)).removeClass('done');
+                    let data = {'done': false}
+                    $.ajax({
+                        type: 'PUT',
+                        url: '/api/event/' + id,
+                        contentType: "application/json",
+                        dataType: 'json',
+                        data: JSON.stringify(data)
+                    }).done(function() {/*тут можно дописать всплывашку типа "выполнено"*/})
+                    }
+                else {
+
+                    $(document.getElementById(id)).addClass('done');
+                    let data = {'done': true}
+                    $.ajax({
+                        type: 'PUT',
+                        url: '/api/event/' + id,
+                        contentType: "application/json",
+                        dataType: 'json',
+                        data: JSON.stringify(data)
+                    }).done(function() {/*тут можно дописать всплывашку типа "выполнено"*/})
+                    };
+            });
+        };
     </script>
 {% endblock %}

@@ -91,6 +91,7 @@ class Event(db.Model):
     date = db.Column(db.Date, index=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     color = db.Column(db.String(10))
+    done = db.Column(db.Boolean, unique=False, default=False)
 
     def __repr__(self):
         return '<Event {}>'.format(self.summary)
@@ -101,16 +102,22 @@ class Event(db.Model):
             'summary': self.summary,
             'full_description': self.full_description,
             'date': self.date_to_dict(self.date),
-            'color': self.color
+            'color': self.color,
+            'done': self.done
         }
         return data
 
     def from_dict(self, data):
-        for field in ['summary', 'full_description', 'date', 'color']:
+        for field in ['summary', 'full_description', 'date', 'color', 'done']:
             if field in data:
                 if field == 'date':
                     setattr(self, field, self.dict_to_date(data[field]))
                     continue
+                if field == 'done' and type(data[field]) == str:
+                    if data[field].lower() == 'false':
+                        data[field] = False
+                    else:
+                        data[field] = True
                 setattr(self, field, data[field])
 
     @staticmethod

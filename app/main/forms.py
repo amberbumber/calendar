@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import SelectField, DateField, SubmitField, StringField, TextAreaField, RadioField
+from wtforms import SelectField, DateField, SubmitField, StringField, TextAreaField, RadioField, BooleanField
 from wtforms.validators import ValidationError, DataRequired
 from app.models import User
 from datetime import date
@@ -35,7 +35,10 @@ class EventForm(FlaskForm):
                        choices=[('default', 'По умолчанию'), ('blue', 'Голубой'), ('green', 'Зеленый'),
                                 ('yellow', 'Желтый'), ('orange', 'Оранжевый'), ('red', 'Красный'), ('pink', 'Розовый')],
                        validate_choice=False)
+    done = BooleanField('Выполнено')
+
 
 # пустая вспомогательная форма
 class EmptyForm():
+    checkbox = BooleanField('Выполнено')
     submit = SubmitField('Submit')

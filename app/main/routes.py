@@ -93,7 +93,8 @@ def event(id):
                               year=form.date.data.year),
                     summary=form.summary.data,
                     full_description=form.full_description.data,
-                    color=form.color.data if form.color.data else event.color)
+                    color=form.color.data if form.color.data else event.color,
+                    done=form.done.data if form.done.data else False)
         r_edit_event = requests.put(url_for('api.edit_event', _external=True, id=event.id), json=data)
         print(r_edit_event.status_code)
         print(r_edit_event.content)
@@ -109,6 +110,7 @@ def event(id):
         form.summary.data = event.summary
         form.full_description.data = event.full_description
         form.color.data = event.color
+        form.done.data = event.done
     return render_template('event_card.html', form=form, event=event, color_amount=color_amount)
 
 

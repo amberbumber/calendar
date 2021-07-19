@@ -13,12 +13,18 @@
                     {{ form.date.label }}
                     {{ form.date(class="form-control dp" , type='text') }}<br>
                 </div>
-                <div class="col-md-9">
+                <div class="col-md-9" style="margin-bottom: 20px">
                     <br>
                     {{ form.summary.label }}
                     {{ form.summary(class="form-control", placeholder='...') }}
                 </div>
             </div>
+            {% if event %}
+            <div>
+                {{ form.done }}
+                {{ form.done.label }}
+            </div>
+            {% endif %}
             <div>
                     <br>
                     {{ form.full_description.label }}
@@ -26,7 +32,7 @@
                     <div class="col-md-9">
                         {{ form.full_description(class="form-control fix-width-100") }}
                     </div>
-                    <div  class="col-md-3 colors">
+                    <div  class="col-md-3 color">
                         {% for i in range(color_amount) %}
                             <div>
                                 <label class="btn event-cell {{form.color.choices[i][0]}}
