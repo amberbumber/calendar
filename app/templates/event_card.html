@@ -13,12 +13,18 @@
                     {{ form.date.label }}
                     {{ form.date(class="form-control dp" , type='text') }}<br>
                 </div>
-                <div class="col-md-9">
+                <div class="col-md-9" style="margin-bottom: 20px">
                     <br>
                     {{ form.summary.label }}
                     {{ form.summary(class="form-control", placeholder='...') }}
                 </div>
             </div>
+            {% if event %}
+            <div>
+                {{ form.done }}
+                {{ form.done.label }}
+            </div>
+            {% endif %}
             <div>
                     <br>
                     {{ form.full_description.label }}
@@ -26,7 +32,7 @@
                     <div class="col-md-9">
                         {{ form.full_description(class="form-control fix-width-100") }}
                     </div>
-                    <div  class="col-md-3">
+                    <div  class="col-md-3 color">
                         {% for i in range(color_amount) %}
                             <div>
                                 <label class="btn event-cell {{form.color.choices[i][0]}}
@@ -34,7 +40,7 @@
                                               {% elif (not event or not event.color)
                                               and form.color.choices[i][0] == 'default' %} checked
                                               {% endif %}">
-                                    {{form.color.choices[i][1]}}
+                                    {#form.color.choices[i][1]-отбражение названий цветов (пока закомментировала)#}
                                     <input id="color-{{i}}" name="color" type="radio" value="{{form.color.choices[i][0]}}">
                                 </label>
                             </div>
@@ -48,7 +54,11 @@
             <div class="row center-block">
                 <div class="col-md-4 center-content">
                     <br>
-                    <a class="btn btn-default" href="{{ url_for('main.calendar') }}" role="button">Назад</a>
+                    <a class="btn btn-default"
+                       href="{{ url_for('main.calendar',
+                                         month=form.date.data.month if form.date.data.month else month,
+                                         year = form.date.data.year if form.date.data.year else year) }}"
+                       role="button">Назад</a>
                 </div>
                 <div class="col-md-4 center-content">
                     <br>

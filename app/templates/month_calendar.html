@@ -85,7 +85,8 @@
         <div class="col-md-10"></div>
         <div class="col-md-2">
             <br>
-            <a class="btn btn-success" href="{{ url_for('main.add_event') }}" role="button">Добавить событие</a>
+            <a class="btn btn-success" href="{{ url_for('main.add_event', m=c.month_number, y=c.year) }}"
+               role="button">Добавить событие</a>
         </div>
     </div>
     {% endif %}
